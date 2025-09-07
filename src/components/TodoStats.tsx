@@ -38,7 +38,7 @@ export default function TodoStats({ stats }: TodoStatsProps) {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* Total Tasks */}
         <div className={`p-4 rounded-lg text-center ${
           isDark ? 'bg-gray-700' : 'bg-gray-100'
@@ -79,7 +79,15 @@ export default function TodoStats({ stats }: TodoStatsProps) {
               work: { label: 'Work', color: 'bg-blue-500' },
               study: { label: 'Study', color: 'bg-green-500' },
               personal: { label: 'Personal', color: 'bg-purple-500' },
+              health: { label: 'Health', color: 'bg-red-500' },
+              finance: { label: 'Finance', color: 'bg-yellow-500' },
+              hobby: { label: 'Hobby', color: 'bg-pink-500' },
             }[category as keyof typeof stats.byCategory];
+
+            // Fallback for unknown categories
+            if (!categoryInfo) {
+              return null;
+            }
 
             const categoryProgress = data.total > 0 ? (data.completed / data.total) * 100 : 0;
 

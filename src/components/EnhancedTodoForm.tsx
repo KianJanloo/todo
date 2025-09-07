@@ -3,14 +3,18 @@
 import React, { useState } from 'react';
 import { TodoCategory, TodoPriority } from '@/types/todo';
 import { useTheme } from '@/contexts/ThemeContext';
+import { 
+  HiChevronDown, HiBriefcase, HiAcademicCap, HiUser, HiHeart, HiCurrencyDollar, HiSparkles,
+  HiPlus, HiLightningBolt
+} from 'react-icons/hi';
 
-const CATEGORIES: { value: TodoCategory; label: string; icon: string; color: string }[] = [
-  { value: 'work', label: 'Work', icon: '💼', color: 'bg-blue-500' },
-  { value: 'study', label: 'Study', icon: '📚', color: 'bg-green-500' },
-  { value: 'personal', label: 'Personal', icon: '👤', color: 'bg-purple-500' },
-  { value: 'health', label: 'Health', icon: '🏃', color: 'bg-red-500' },
-  { value: 'finance', label: 'Finance', icon: '💰', color: 'bg-yellow-500' },
-  { value: 'hobby', label: 'Hobby', icon: '🎨', color: 'bg-pink-500' },
+const CATEGORIES: { value: TodoCategory; label: string; icon: React.ComponentType; color: string }[] = [
+  { value: 'work', label: 'Work', icon: HiBriefcase, color: 'bg-blue-500' },
+  { value: 'study', label: 'Study', icon: HiAcademicCap, color: 'bg-green-500' },
+  { value: 'personal', label: 'Personal', icon: HiUser, color: 'bg-purple-500' },
+  { value: 'health', label: 'Health', icon: HiHeart, color: 'bg-red-500' },
+  { value: 'finance', label: 'Finance', icon: HiCurrencyDollar, color: 'bg-yellow-500' },
+  { value: 'hobby', label: 'Hobby', icon: HiSparkles, color: 'bg-pink-500' },
 ];
 
 const PRIORITIES: { value: TodoPriority; label: string; color: string }[] = [
@@ -87,10 +91,10 @@ export default function EnhancedTodoForm({ onSubmit, onCancel, initialData }: En
   };
 
   const quickTasks = [
-    { text: 'Check emails', category: 'work' as TodoCategory },
-    { text: 'Read for 30 minutes', category: 'study' as TodoCategory },
-    { text: 'Exercise', category: 'health' as TodoCategory },
-    { text: 'Review budget', category: 'finance' as TodoCategory },
+    { text: 'Check emails', category: 'work' as TodoCategory, icon: HiBriefcase },
+    { text: 'Read for 30 minutes', category: 'study' as TodoCategory, icon: HiAcademicCap },
+    { text: 'Exercise', category: 'health' as TodoCategory, icon: HiHeart },
+    { text: 'Review budget', category: 'finance' as TodoCategory, icon: HiCurrencyDollar },
   ];
 
   return (
@@ -122,14 +126,15 @@ export default function EnhancedTodoForm({ onSubmit, onCancel, initialData }: En
           >
             {CATEGORIES.map(cat => (
               <option key={cat.value} value={cat.value}>
-                {cat.icon} {cat.label}
+                {cat.label}
               </option>
             ))}
           </select>
           <button
             type="submit"
-            className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+            className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium flex items-center gap-2"
           >
+            <HiPlus className="w-4 h-4" />
             Add Task
           </button>
         </div>
@@ -142,9 +147,7 @@ export default function EnhancedTodoForm({ onSubmit, onCancel, initialData }: En
             isDark ? 'text-gray-400 hover:text-white' : 'text-gray-600 hover:text-gray-900'
           }`}
         >
-          <svg className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
+          <HiChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
           {isExpanded ? 'Less options' : 'More options'}
         </button>
 
@@ -231,20 +234,24 @@ export default function EnhancedTodoForm({ onSubmit, onCancel, initialData }: En
 
         {/* Quick add suggestions */}
         <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-sm font-medium mb-3 text-gray-600 dark:text-gray-400">Quick Add:</p>
+          <p className="text-sm font-medium mb-3 text-gray-600 dark:text-gray-400 flex items-center gap-2">
+            <HiLightningBolt className="w-4 h-4" />
+            Quick Add:
+          </p>
           <div className="flex flex-wrap gap-2">
             {quickTasks.map((task, index) => (
               <button
                 key={index}
                 type="button"
                 onClick={() => quickAdd(task.text, task.category)}
-                className={`px-3 py-1 rounded-full text-sm transition-colors ${
+                className={`px-3 py-1 rounded-full text-sm transition-colors flex items-center gap-2 ${
                   isDark
                     ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                {CATEGORIES.find(c => c.value === task.category)?.icon} {task.text}
+                <task.icon className="w-3 h-3" />
+                {task.text}
               </button>
             ))}
           </div>

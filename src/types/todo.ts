@@ -26,6 +26,9 @@ export interface TodoStats {
     work: { total: number; completed: number };
     study: { total: number; completed: number };
     personal: { total: number; completed: number };
+    health: { total: number; completed: number };
+    finance: { total: number; completed: number };
+    hobby: { total: number; completed: number };
   };
 }
 

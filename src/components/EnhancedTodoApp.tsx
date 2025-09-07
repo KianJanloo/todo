@@ -229,7 +229,7 @@ export default function EnhancedTodoApp() {
         />
 
         <main className="flex-1 lg:ml-0">
-          <div className="p-6 max-w-6xl mx-auto">
+          <div className="p-4 sm:p-6 max-w-6xl mx-auto">
             {/* Stats */}
             <TodoStats stats={stats} />
 

@@ -3,14 +3,18 @@
 import React, { useState } from 'react';
 import { Todo, TodoCategory, TodoPriority } from '@/types/todo';
 import { useTheme } from '@/contexts/ThemeContext';
+import { 
+  HiCheck, HiPencil, HiArchive, HiTrash, HiCalendar, HiTag,
+  HiBriefcase, HiAcademicCap, HiUser, HiHeart, HiCurrencyDollar, HiSparkles
+} from 'react-icons/hi';
 
-const CATEGORIES: { value: TodoCategory; label: string; color: string }[] = [
-  { value: 'work', label: 'Work', color: 'bg-blue-500' },
-  { value: 'study', label: 'Study', color: 'bg-green-500' },
-  { value: 'personal', label: 'Personal', color: 'bg-purple-500' },
-  { value: 'health', label: 'Health', color: 'bg-red-500' },
-  { value: 'finance', label: 'Finance', color: 'bg-yellow-500' },
-  { value: 'hobby', label: 'Hobby', color: 'bg-pink-500' },
+const CATEGORIES: { value: TodoCategory; label: string; color: string; icon: React.ComponentType }[] = [
+  { value: 'work', label: 'Work', color: 'bg-blue-500', icon: HiBriefcase },
+  { value: 'study', label: 'Study', color: 'bg-green-500', icon: HiAcademicCap },
+  { value: 'personal', label: 'Personal', color: 'bg-purple-500', icon: HiUser },
+  { value: 'health', label: 'Health', color: 'bg-red-500', icon: HiHeart },
+  { value: 'finance', label: 'Finance', color: 'bg-yellow-500', icon: HiCurrencyDollar },
+  { value: 'hobby', label: 'Hobby', color: 'bg-pink-500', icon: HiSparkles },
 ];
 
 const PRIORITIES: { value: TodoPriority; label: string; color: string }[] = [
@@ -229,7 +233,7 @@ export default function EnhancedTodoItem({
                   : 'border-gray-300 hover:border-green-500 hover:bg-green-50'
               }`}
             >
-              {todo.completed && '✓'}
+              {todo.completed && <HiCheck className="w-4 h-4" />}
             </button>
             
             <div className="flex-1 min-w-0">
@@ -252,7 +256,8 @@ export default function EnhancedTodoItem({
                   </span>
                   
                   {/* Category badge */}
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium text-white ${categoryInfo?.color}`}>
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium text-white flex items-center gap-1 ${categoryInfo?.color}`}>
+                    {categoryInfo?.icon && <categoryInfo.icon className="w-3 h-3" />}
                     {categoryInfo?.label}
                   </span>
                 </div>
@@ -282,13 +287,15 @@ export default function EnhancedTodoItem({
                   <span className={`flex items-center gap-1 ${
                     isOverdue ? 'text-red-500 font-medium' : ''
                   }`}>
-                    📅 {formatDate(new Date(todo.dueDate))}
+                    <HiCalendar className="w-3 h-3" />
+                    {formatDate(new Date(todo.dueDate))}
                     {isOverdue && ' (Overdue)'}
                   </span>
                 )}
                 <span>Created {formatDate(todo.createdAt)}</span>
                 {todo.completedAt && (
-                  <span className="text-green-500">
+                  <span className="text-green-500 flex items-center gap-1">
+                    <HiCheck className="w-3 h-3" />
                     Completed {formatDate(todo.completedAt)}
                   </span>
                 )}
@@ -302,21 +309,21 @@ export default function EnhancedTodoItem({
                 className="p-2 text-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900 rounded-lg transition-colors"
                 title="Edit"
               >
-                ✏️
+                <HiPencil className="w-4 h-4" />
               </button>
               <button
                 onClick={() => onArchive(todo.id)}
                 className="p-2 text-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900 rounded-lg transition-colors"
                 title={todo.archived ? 'Unarchive' : 'Archive'}
               >
-                {todo.archived ? '📤' : '📦'}
+                <HiArchive className="w-4 h-4" />
               </button>
               <button
                 onClick={() => onDelete(todo.id)}
                 className="p-2 text-red-500 hover:bg-red-50 dark:hover:bg-red-900 rounded-lg transition-colors"
                 title="Delete"
               >
-                🗑️
+                <HiTrash className="w-4 h-4" />
               </button>
             </div>
           </div>

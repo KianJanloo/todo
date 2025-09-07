@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
+import { HiChevronDown, HiUser, HiCog, HiUpload, HiDownload, HiQuestionMarkCircle, HiLogout } from 'react-icons/hi';
 
 export default function UserMenu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,11 +21,11 @@ export default function UserMenu() {
   }, []);
 
   const menuItems = [
-    { label: 'Profile', icon: '👤', action: () => console.log('Profile') },
-    { label: 'Settings', icon: '⚙️', action: () => console.log('Settings') },
-    { label: 'Export Data', icon: '📤', action: () => console.log('Export') },
-    { label: 'Import Data', icon: '📥', action: () => console.log('Import') },
-    { label: 'Help', icon: '❓', action: () => console.log('Help') },
+    { label: 'Profile', icon: HiUser, action: () => console.log('Profile') },
+    { label: 'Settings', icon: HiCog, action: () => console.log('Settings') },
+    { label: 'Export Data', icon: HiUpload, action: () => console.log('Export') },
+    { label: 'Import Data', icon: HiDownload, action: () => console.log('Import') },
+    { label: 'Help', icon: HiQuestionMarkCircle, action: () => console.log('Help') },
   ];
 
   return (
@@ -40,9 +41,7 @@ export default function UserMenu() {
         <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center text-white text-sm font-semibold">
           U
         </div>
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        <HiChevronDown className="w-4 h-4" />
       </button>
 
       {isOpen && (
@@ -62,7 +61,7 @@ export default function UserMenu() {
                   : 'hover:bg-gray-100 text-gray-700'
               }`}
             >
-              <span className="text-lg">{item.icon}</span>
+              <item.icon className="w-4 h-4" />
               {item.label}
             </button>
           ))}
@@ -80,7 +79,7 @@ export default function UserMenu() {
                 : 'hover:bg-gray-100 text-red-600'
             }`}
           >
-            <span className="text-lg">🚪</span>
+            <HiLogout className="w-4 h-4" />
             Sign Out
           </button>
         </div>
