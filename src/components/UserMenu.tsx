@@ -2,9 +2,14 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
-import { HiChevronDown, HiUser, HiCog, HiUpload, HiDownload, HiQuestionMarkCircle, HiLogout } from 'react-icons/hi';
+import { HiChevronDown, HiUpload, HiDownload } from 'react-icons/hi';
 
-export default function UserMenu() {
+interface UserMenuProps {
+  onExport?: () => void;
+  onImport?: () => void;
+}
+
+export default function UserMenu({ onExport, onImport }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const { isDark } = useTheme();
@@ -21,11 +26,8 @@ export default function UserMenu() {
   }, []);
 
   const menuItems = [
-    { label: 'Profile', icon: HiUser, action: () => console.log('Profile') },
-    { label: 'Settings', icon: HiCog, action: () => console.log('Settings') },
-    { label: 'Export Data', icon: HiUpload, action: () => console.log('Export') },
-    { label: 'Import Data', icon: HiDownload, action: () => console.log('Import') },
-    { label: 'Help', icon: HiQuestionMarkCircle, action: () => console.log('Help') },
+    { label: 'Export Data', icon: HiUpload, action: () => onExport?.() },
+    { label: 'Import Data', icon: HiDownload, action: () => onImport?.() },
   ];
 
   return (
@@ -65,23 +67,6 @@ export default function UserMenu() {
               {item.label}
             </button>
           ))}
-          <div className={`border-t my-1 ${
-            isDark ? 'border-gray-700' : 'border-gray-200'
-          }`} />
-          <button
-            onClick={() => {
-              console.log('Sign out');
-              setIsOpen(false);
-            }}
-            className={`w-full text-left px-4 py-2 text-sm flex items-center gap-3 transition-colors ${
-              isDark 
-                ? 'hover:bg-gray-700 text-red-400' 
-                : 'hover:bg-gray-100 text-red-600'
-            }`}
-          >
-            <HiLogout className="w-4 h-4" />
-            Sign Out
-          </button>
         </div>
       )}
     </div>

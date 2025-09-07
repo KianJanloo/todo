@@ -14,66 +14,66 @@ export default function TodoStats({ stats }: TodoStatsProps) {
   const progressPercentage = stats.total > 0 ? (stats.completed / stats.total) * 100 : 0;
 
   return (
-    <div className={`p-6 rounded-lg shadow-lg mb-8 ${
+    <div className={`p-4 sm:p-6 rounded-lg shadow-lg mb-6 sm:mb-8 ${
       isDark ? 'bg-gray-800' : 'bg-white'
     }`}>
-        <h2 className="text-2xl font-bold mb-6 text-center">Task Statistics</h2>
+        <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-center">Task Statistics</h2>
       
       {/* Overall Progress */}
-      <div className="mb-6">
+      <div className="mb-4 sm:mb-6">
         <div className="flex justify-between items-center mb-2">
-          <span className="text-lg font-semibold">Overall Progress</span>
+          <span className="text-base sm:text-lg font-semibold">Overall Progress</span>
         </div>
-        <div className={`w-full rounded-full h-3 ${
+        <div className={`w-full rounded-full h-2 sm:h-3 ${
           isDark ? 'bg-gray-700' : 'bg-gray-200'
         }`}>
           <div
-            className="bg-gradient-to-r from-blue-500 to-green-500 h-3 rounded-full transition-all duration-500"
+            className="bg-gradient-to-r from-blue-500 to-green-500 h-2 sm:h-3 rounded-full transition-all duration-500"
             style={{ width: `${progressPercentage}%` }}
           />
         </div>
-        <div className="text-center mt-2 text-sm opacity-75">
+        <div className="text-center mt-2 text-xs sm:text-sm opacity-75">
           {progressPercentage.toFixed(1)}% completed
         </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
         {/* Total Tasks */}
-        <div className={`p-4 rounded-lg text-center ${
+        <div className={`p-3 sm:p-4 rounded-lg text-center ${
           isDark ? 'bg-gray-700' : 'bg-gray-100'
         }`}>
-          <div className="text-3xl font-bold text-blue-500 mb-1">
+          <div className="text-2xl sm:text-3xl font-bold text-blue-500 mb-1">
             {stats.total}
           </div>
-          <div className="text-sm opacity-75">Total Tasks</div>
+          <div className="text-xs sm:text-sm opacity-75">Total</div>
         </div>
 
         {/* Completed Tasks */}
-        <div className={`p-4 rounded-lg text-center ${
+        <div className={`p-3 sm:p-4 rounded-lg text-center ${
           isDark ? 'bg-gray-700' : 'bg-gray-100'
         }`}>
-          <div className="text-3xl font-bold text-green-500 mb-1">
+          <div className="text-2xl sm:text-3xl font-bold text-green-500 mb-1">
             {stats.completed}
           </div>
-          <div className="text-sm opacity-75">Completed</div>
+          <div className="text-xs sm:text-sm opacity-75">Done</div>
         </div>
 
         {/* Remaining Tasks */}
-        <div className={`p-4 rounded-lg text-center ${
+        <div className={`p-3 sm:p-4 rounded-lg text-center ${
           isDark ? 'bg-gray-700' : 'bg-gray-100'
         }`}>
-          <div className="text-3xl font-bold text-orange-500 mb-1">
+          <div className="text-2xl sm:text-3xl font-bold text-orange-500 mb-1">
             {stats.remaining}
           </div>
-          <div className="text-sm opacity-75">Remaining</div>
+          <div className="text-xs sm:text-sm opacity-75">Pending</div>
         </div>
       </div>
 
       {/* Category Breakdown */}
-      <div className="mt-6">
-        <h3 className="text-lg font-semibold mb-4 text-center">Breakdown by Category</h3>
-        <div className="space-y-3">
+      <div className="mt-4 sm:mt-6">
+        <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-center">Breakdown by Category</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {Object.entries(stats.byCategory).map(([category, data]) => {
             const categoryInfo = {
               work: { label: 'Work', color: 'bg-blue-500' },
@@ -97,20 +97,23 @@ export default function TodoStats({ stats }: TodoStatsProps) {
               }`}>
                 <div className="flex justify-between items-center mb-2">
                   <div className="flex items-center gap-2">
-                    <div className={`w-3 h-3 rounded-full ${categoryInfo.color}`} />
-                    <span className="font-medium">{categoryInfo.label}</span>
+                    <div className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full ${categoryInfo.color}`} />
+                    <span className="text-sm sm:text-base font-medium">{categoryInfo.label}</span>
                   </div>
-                  <span className="text-sm opacity-75">
-                    {data.completed} / {data.total}
+                  <span className="text-xs sm:text-sm opacity-75">
+                    {data.completed}/{data.total}
                   </span>
                 </div>
-                <div className={`w-full rounded-full h-2 ${
+                <div className={`w-full rounded-full h-1.5 sm:h-2 ${
                   isDark ? 'bg-gray-600' : 'bg-gray-200'
                 }`}>
                   <div
-                    className={`h-2 rounded-full transition-all duration-500 ${categoryInfo.color}`}
+                    className={`h-1.5 sm:h-2 rounded-full transition-all duration-500 ${categoryInfo.color}`}
                     style={{ width: `${categoryProgress}%` }}
                   />
+                </div>
+                <div className="text-xs text-center mt-1 opacity-75">
+                  {categoryProgress.toFixed(0)}%
                 </div>
               </div>
             );

@@ -18,9 +18,9 @@ export default function ThemeToggle() {
       title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {isDark ? (
-        <HiSun className="w-4 h-4" />
+        <HiSun className="w-5.5 h-5.5" />
       ) : (
-        <HiMoon className="w-4 h-4" />
+        <HiMoon className="w-5.5 h-5.5" />
       )}
     </button>
   );

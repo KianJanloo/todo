@@ -79,6 +79,9 @@ interface SidebarProps {
   onCategoryChange: (category: TodoCategory | "all") => void;
   onFilterChange: (filter: FilterOption) => void;
   onSortChange: (sort: SortOption) => void;
+  onExportTasks: () => void;
+  onImportTasks: () => void;
+  onClearCompleted: () => void;
   stats: {
     total: number;
     completed: number;
@@ -95,6 +98,9 @@ export default function Sidebar({
   onCategoryChange,
   onFilterChange,
   onSortChange,
+  onExportTasks,
+  onImportTasks,
+  onClearCompleted,
   stats,
 }: SidebarProps) {
   const { isDark } = useTheme();
@@ -111,25 +117,31 @@ export default function Sidebar({
 
       {/* Sidebar */}
       <div
-        className={`fixed inset-y-0 left-0 z-50 w-72 sm:w-80 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-50 w-80 sm:w-96 transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 lg:static lg:inset-0 ${
+        } lg:translate-x-0 lg:static lg:inset-0 lg:w-80 ${
           isDark ? "bg-gray-900" : "bg-white"
-        } border-r ${isDark ? "border-gray-700" : "border-gray-200"}`}
+        } border-r ${isDark ? "border-gray-700" : "border-gray-200"} shadow-lg lg:shadow-none`}
       >
         <div className="flex flex-col h-full">
           {/* Sidebar header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
-            <h2 className="text-xl font-semibold">Navigation</h2>
+          <div className={`flex items-center justify-between p-4 sm:p-6 border-b ${
+            isDark ? "border-gray-700" : "border-gray-200"
+          }`}>
+            <h2 className="text-lg sm:text-xl font-semibold">Navigation</h2>
             <button
               onClick={onClose}
-              className="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+              className={`lg:hidden p-1.5 sm:p-2 rounded-lg transition-colors ${
+                isDark
+                  ? "hover:bg-gray-800 text-gray-300"
+                  : "hover:bg-gray-100 text-gray-600"
+              }`}
             >
               <HiX className="w-5 h-5" />
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-6 space-y-8">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6 sm:space-y-8">
             {/* Quick Stats */}
             <div
               className={`p-4 rounded-lg ${
@@ -175,7 +187,9 @@ export default function Sidebar({
                         : "hover:bg-gray-100 text-gray-700"
                     }`}
                   >
-                    <filter.icon className="w-5 h-5" />
+                    <span className="w-5 h-5 flex items-center justify-center">
+                      <filter.icon />
+                    </span>
                     {filter.label}
                   </button>
                 ))}
@@ -215,7 +229,9 @@ export default function Sidebar({
                         : "hover:bg-gray-100 text-gray-700"
                     }`}
                   >
-                    <category.icon className="w-5 h-5" />
+                    <span className="w-5 h-5 flex items-center justify-center">
+                      <category.icon />
+                    </span>
                     <span className="flex-1">{category.label}</span>
                     <span
                       className={`px-2 py-1 rounded-full text-xs font-medium text-white ${category.color}`}
@@ -252,6 +268,7 @@ export default function Sidebar({
               <h3 className="font-semibold mb-3">Quick Actions</h3>
               <div className="space-y-2">
                 <button
+                  onClick={onExportTasks}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                     isDark
                       ? "hover:bg-gray-800 text-gray-300"
@@ -262,6 +279,7 @@ export default function Sidebar({
                   Export Tasks
                 </button>
                 <button
+                  onClick={onImportTasks}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                     isDark
                       ? "hover:bg-gray-800 text-gray-300"
@@ -272,6 +290,7 @@ export default function Sidebar({
                   Import Tasks
                 </button>
                 <button
+                  onClick={onClearCompleted}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                     isDark
                       ? "hover:bg-gray-800 text-gray-300"
